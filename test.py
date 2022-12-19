@@ -38,8 +38,13 @@ def test(data,
          plots=True,
          log_imgs=0):  # number of logged images
 
+    print("[LOG] Data use:")
+    print(data)
+
     # Initialize/load model and set device
     training = model is not None
+
+    print("IsTraining", training)
     if training:  # called by train.py
         device = next(model.parameters()).device  # get model device
 
@@ -106,6 +111,8 @@ def test(data,
         with torch.no_grad():
             # Run model
             t = time_synchronized()
+            # print("IMage:")
+            # print(img)
             inf_out, train_out = model(img, augment=augment)  # inference and training outputs
             t0 += time_synchronized() - t
 

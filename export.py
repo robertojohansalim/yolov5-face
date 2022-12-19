@@ -17,6 +17,7 @@ import models
 from models.experimental import attempt_load
 from utils.activations import Hardswish, SiLU
 from utils.general import set_logging, check_img_size
+# from torch import onnx
 import onnx
 
 if __name__ == '__main__':
