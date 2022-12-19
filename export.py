@@ -70,6 +70,8 @@ if __name__ == '__main__':
             for i in range(len(m.branch2)):
                 if isinstance(m.branch2[i], nn.SiLU):
                     m.branch2[i] = SiLU()
+        if isinstance(m, nn.Upsample):
+            m.recompute_scale_factor = None
     y = model(img)  # dry run
 
     # ONNX export
