@@ -8,6 +8,7 @@ import os
 import numpy as np
 import cv2
 import torch
+import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from numpy import random
 import copy
@@ -142,6 +143,13 @@ def detect(
         if img.ndimension() == 3:
             img = img.unsqueeze(0)
 
+
+        # Edit Model If needed
+        if True:
+            # Update model
+            for k, m in model.named_modules():
+                if isinstance(m, nn.Upsample):
+                    m.recompute_scale_factor = None
         # Inference
         pred = model(img)[0]
         
@@ -210,7 +218,7 @@ def detect(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='runs/train/exp5/weights/last.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='weights/yolov5s.pt', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='0', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--project', default=ROOT / 'runs/detect', help='save results to project/name')
